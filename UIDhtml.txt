@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #6c63ff, #c572ff);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #5753e6, #a956e6);
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .student-result {
+            background-color: #f0f1f6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .student-result p {
+            margin: 5px 0;
+        }
+        .student-result strong {
+            color: #6c63ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Marks Calculator</h1>
+        <button onclick="getStudentMarks()">Enter Marks</button>
+        <div id="results"></div>
+    </div>
+    <script>
+        class Student {
+            constructor(name, subject1, subject2, subject3) {
+                this.name = name;
+                this.subject1 = subject1;
+                this.subject2 = subject2;
+                this.subject3 = subject3;
+            }
+
+            calculateTotal() {
+                return this.subject1 + this.subject2 + this.subject3;
+            }
+
+            calculateAverage() {
+                return this.calculateTotal() / 3;
+            }
+        }
+
+        function getStudentMarks() {
+            const numberOfStudents = parseInt(prompt("Enter the number of students:"), 10);
+            const students = [];
+
+            for (let i = 0; i < numberOfStudents; i++) {
+                const name = prompt(`Enter the name of Student ${i + 1}:`);
+                const subject1 = parseFloat(prompt(`Enter marks for ${name} - Subject 1:`));
+                const subject2 = parseFloat(prompt(`Enter marks for ${name} - Subject 2:`));
+                const subject3 = parseFloat(prompt(`Enter marks for ${name} - Subject 3:`));
+
+                const student = new Student(name, subject1, subject2, subject3);
+                students.push(student);
+            }
+
+            displayResults(students);
+        }
+
+        function displayResults(students) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            for (let i = 0; i < students.length; i++) {
+                const total = students[i].calculateTotal();
+                const average = students[i].calculateAverage();
+
+                const studentDiv = document.createElement('div');
+                studentDiv.className = 'student-result';
+                studentDiv.innerHTML = `<p><strong>${students[i].name}</strong></p>
+                                        <p>Total Marks: ${total}</p>
+                                        <p>Average Marks: ${average.toFixed(2)}</p>`;
+
+                resultsDiv.appendChild(studentDiv);
+            }
+        }
+    </script>
+</body>
+</html>
